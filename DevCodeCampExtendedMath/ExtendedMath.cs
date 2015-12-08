@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace DevCodeCampExtendedMath
 {
-    static class ExtendedMath
+    public static class ExtendedMath
     {
-        public static List<int> FindHappies(int superHappyNums)
+        public static List<int> GetHappyNums(int nums)
         {
                     
             List<int> happyNumbers = new List<int>();
             int checkAgainst = 1;
         
-            while (happyNumbers.Count < superHappyNums)
+            while (happyNumbers.Count < nums)
             {
-                if (FindHappies(checkAgainst))
+                if (CheckHappyNumbers(checkAgainst))
                 {
                     happyNumbers.Add(checkAgainst);
                     checkAgainst += 1;
@@ -28,11 +28,8 @@ namespace DevCodeCampExtendedMath
             return happyNumbers;
         }
 
-        private static bool FindHappies(int number)
-        {
-            
-        }
-        private static int AddPowers(int num)
+ 
+        public static int AddPowers(int num)
         {
             int sum = 0;
             char[] splitToDigits = num.ToString().ToCharArray();
@@ -43,11 +40,33 @@ namespace DevCodeCampExtendedMath
             }
             return sum;
 
-        }         
+        }
+
+        public static bool CheckHappyNumbers(int number)
+        {
+            List<int> copyList = new List<int>();
+            bool find = true;
+            while (find)
+            {
+                int result = AddPowers(number);
+                if (result == 1)
+                {
+                    return true;
+                }
+                else if (copyList.Contains(result))
+                {
+                    return false;
+                }
+                else
+                {
+                    number = result;
+                    copyList.Add(result);
+                }   
+            }
+            return false;
 
 
 
-
-
+        }
     }
 }
